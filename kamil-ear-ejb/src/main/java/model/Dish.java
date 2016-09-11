@@ -64,7 +64,6 @@ public class Dish {
         this.category = category;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

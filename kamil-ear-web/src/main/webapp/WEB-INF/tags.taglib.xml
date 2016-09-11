@@ -8,4 +8,8 @@
         <tag-name>orders</tag-name>
         <source>../tags/orders.xhtml</source>
     </tag>
+    <tag>
+        <tag-name>logout</tag-name>
+        <source>../tags/logout.xhtml</source>
+    </tag>
 </facelet-taglib>

@@ -75,6 +75,7 @@ public class OrderMB {
             return orderFacade.findOrderByUser(userMB.getCurrentUser());
         } else if (userMB.isDeliverer()) {
             List<Order> orders = orderFacade.findOrderByStatus(OrderStatus.TODELIVER);
+            orders.addAll(orderFacade.findOrderByStatus(OrderStatus.DELIVERING));
             List<Order> deliverOrders = new ArrayList<>();
             for (Order order1 : orders) {
                 if(order1.getDeliverer().getName().equals(userMB.getCurrentUser().getName())) {

@@ -21,7 +21,7 @@ public class BrowserFilter implements Filter {
         for(String browser: DISALLOWED_BROWSERS){
             if(userAgent.contains(browser)){
                 HttpServletResponse res = (HttpServletResponse) response;
-                res.sendRedirect("/login/wrongBrowser");
+                res.sendRedirect("/soa/login/wrongBrowser.xhtml");
                 return;
             }
         }
