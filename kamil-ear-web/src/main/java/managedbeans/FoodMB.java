@@ -1,12 +1,10 @@
 package managedbeans;
 
-import facade.CategoryFacade;
-import facade.DishFacade;
-import facade.IngridientFacade;
-import facade.IngridientFacadeImpl;
+import facade.*;
 import model.Category;
 import model.Dish;
 import model.Ingridient;
+import model.Order;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -33,6 +31,9 @@ public class FoodMB {
 
     @Inject
     private UserMB userMB;
+
+    @Inject
+    private OrderFacade orderFacade;
 
     private Ingridient ingridient = new Ingridient();
 
@@ -133,6 +134,30 @@ public class FoodMB {
     }
 
     public void deleteDish(Dish dish) {
-        if (dish != null) dishFacade.delete(dish);
+        if (dish != null) {
+            List<Order> orders = orderFacade.findAll();
+
+            List<Order> ordersToDelete = new ArrayList<>();
+
+            for (Order order : orders) {
+                if(order.getOrderedDishes().contains(dish)) {
+                    ordersToDelete.add(order);
+                }
+            }
+
+            for (Order order : ordersToDelete) {
+                orderFacade.delete(order);
+            }
+
+            dishFacade.delete(dish);
+        }
+    }
+
+    public List<Dish> getMostOrdered() {
+        List<Dish> mostOrdered = null;
+
+
+
+        return mostOrdered;
     }
 }

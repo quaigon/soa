@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xml:lang="en" lang="en">
+<head>
+    <title>Orders</title>
+</head>
+<body>
+
+<p:dataTable var="order" value="#{orderMB.orders}">
+    <p:column headerText="Dish Name">
+        <h:outputText value="#{order.date}"/>
+    </p:column>
+
+    <p:column headerText="Order Status">
+        <h:outputText value="#{order.orderStatus}"/>
+        <h:form>
+            <p:selectOneMenu rendered="#{userMB.staff || userMB.deliverer}" value="#{orderMB.newStatus}">
+                <f:selectItems value="#{orderMB.orderStatuses}"/>
+            </p:selectOneMenu>
+            <p:commandButton rendered="#{userMB.staff || userMB.deliverer}" value="Change status" action="#{orderMB.changeOrderStatus(order)}"/>
+        </h:form>
+    </p:column>
+
+    <p:column headerText="Order cost">
+        <h:outputText value="#{orderMB.calculateCost(order)}"/>
+    </p:column>
+
+    <p:column headerText="Dishes">
+        <p:dataTable var="dish" value="#{order.orderedDishes}">
+            <p:column>
+                <h:outputText value="#{dish.name}"/>
+            </p:column>
+        </p:dataTable>
+    </p:column>
+
+    <p:column headerText="Buttons" rendered="#{userMB.staff}">
+        <h:form>
+            <p:commandButton value="Print recip" action="#{orderMB.showMessage(orderMB.calculateCost(order))}"/>
+        </h:form>
+    </p:column>
+
+</p:dataTable>
+
+
+</body>
+</html>

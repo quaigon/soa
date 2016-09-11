@@ -1,7 +1,9 @@
 package facade;
 
 import dao.OrderDAO;
+import model.Dish;
 import model.Order;
+import model.OrderStatus;
 import model.User;
 
 import javax.inject.Inject;
@@ -29,7 +31,7 @@ public class OrderFacadeImpl implements OrderFacade {
 
     @Override
     public void delete(Order order) {
-        orderDAO.delete(order, Order.class);
+        orderDAO.delete(order.getOrderId(), Order.class);
     }
 
     @Override
@@ -47,6 +49,31 @@ public class OrderFacadeImpl implements OrderFacade {
         Map<String, Object> paramters = new HashMap();
         paramters.put("name", user.getName());
 
-        return orderDAO.findResults("orderByUsername", paramters);
+        List<Order> orders = orderDAO.findResults("orderByUser", paramters);
+
+        return orders;
     }
+
+    @Override
+    public List<Order> findOrderByStatus(OrderStatus orderStatus) {
+
+        Map<String, Object> paramters = new HashMap();
+        paramters.put("status", orderStatus);
+
+        List<Order> orders = orderDAO.findResults("orderByStatus", paramters);
+
+        return orders;
+    }
+
+    @Override
+    public List<Order> findOrderByDish(Dish dish) {
+        Map<String, Object> paramters = new HashMap();
+        paramters.put("dish", dish);
+
+        List<Order> orders = orderDAO.findResults("orderByDish", paramters);
+
+        return orders;
+    }
+
+
 }

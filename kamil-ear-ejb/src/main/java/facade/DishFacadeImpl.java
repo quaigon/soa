@@ -13,7 +13,6 @@ public class DishFacadeImpl implements DishFacade {
     @Inject
     private DishDAO dishDAO;
 
-
     @Override
     public void save(Dish dish) {
         dishDAO.save(dish);

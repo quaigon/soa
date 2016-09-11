@@ -7,8 +7,9 @@ import javax.persistence.*;
  */
 
 @Entity
-@NamedQueries(
-        @NamedQuery(name = "userQuery", query = "SELECT u FROM User u WHERE u.name LIKE :name")
+@NamedQueries({
+        @NamedQuery(name = "userQuery", query = "SELECT u FROM User u WHERE u.name LIKE :name"),
+        @NamedQuery(name = "userByRole", query = "SELECT u FROM User u WHERE u.role LIKE :role")}
 )
 @Table(name = "users")
 public class User {

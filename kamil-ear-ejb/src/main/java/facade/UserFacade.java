@@ -22,4 +22,6 @@ public interface UserFacade {
     List<User> findAll();
 
     User findUserByUsername(String username);
+
+    List<User> findUserByRole(String role);
 }

@@ -15,8 +15,10 @@ import java.util.List;
 @ManagedBean
 @ApplicationScoped
 public class UserMB {
-    private static String MANAGER = "manager";
-    private static String CUSTOMER = "customer";
+    private static final String DELIVERER = "deliver";
+    private static final String MANAGER = "manager";
+    private static final String CUSTOMER = "customer";
+    private static final String STAFF = "staff";
 
     @Inject
     private UserFacade userFacade;
@@ -31,16 +33,10 @@ public class UserMB {
         return user;
     }
 
-    public List<User> getUsers() {
-        return userFacade.findAll();
-    }
+    public List<User> getUserByRole(String role) {
+        List<User> users = null;
 
-    public void updateUser() {
-        userFacade.update(user);
-    }
-
-    public void deleteUser() {
-        userFacade.delete(user);
+        return users;
     }
 
     public void createuser() {
@@ -59,10 +55,21 @@ public class UserMB {
         return user.getRole().equals(MANAGER);
     }
 
+    public boolean isStaff() {
+        User user = userFacade.findUserByUsername(getUserName());
+
+        return user.getRole().equals(STAFF);
+    }
+
     public boolean isCustomer() {
         User user = userFacade.findUserByUsername(getUserName());
 
         return user.getRole().equals(CUSTOMER);
+    }
+    public boolean isDeliverer() {
+        User user = userFacade.findUserByUsername(getUserName());
+
+        return user.getRole().equals(DELIVERER);
     }
 
     private String getUserName() {

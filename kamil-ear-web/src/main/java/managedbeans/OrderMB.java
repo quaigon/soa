@@ -1,11 +1,14 @@
 package managedbeans;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import facade.OrderFacade;
 import model.Dish;
 import model.Order;
 import model.OrderStatus;
 import model.User;
+import org.primefaces.context.RequestContext;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
@@ -27,6 +30,10 @@ public class OrderMB {
 
     private List<Dish> cart = new ArrayList<>();
 
+    private OrderStatus newStatus;
+
+    private Order lastOrder;
+
     @Inject
     private UserMB userMB;
 
@@ -41,10 +48,12 @@ public class OrderMB {
     public void makeOrder() {
         Date date = new Date();
         order.setDate(date);
-        order.setUser(userMB.getCurrentUser());
+        User user = userMB.getCurrentUser();
+        order.setUser(user);
         order.setOrderedDishes(cart);
         order.setOrderStatus(OrderStatus.ORDERED);
         orderFacade.save(order);
+        cart.clear();
     }
 
     public List<Dish> getCart() {
@@ -57,5 +66,63 @@ public class OrderMB {
 
     public void removeFromCart(Dish dish) {
         cart.remove(dish);
+    }
+
+    public List<Order> getOrders() {
+        if (userMB.isCustomer()) {
+            return orderFacade.findOrderByUser(userMB.getCurrentUser());
+        } else if (userMB.isDeliverer()) {
+            return orderFacade.findOrderByStatus(OrderStatus.TODELIVER);
+        } else {
+            return orderFacade.findAll();
+        }
+    }
+
+    public double calculateCost(Order order) {
+        double res = 0;
+        if (order == null) {
+            return res;
+        }
+        for (Dish dish : order.getOrderedDishes()) {
+            res += dish.getCost();
+        }
+
+        return res;
+    }
+
+    public OrderStatus getNewStatus() {
+        return newStatus;
+    }
+
+    public void setNewStatus(OrderStatus newStatus) {
+        this.newStatus = newStatus;
+    }
+
+    public OrderStatus[] getOrderStatuses() {
+        OrderStatus [] orderStatuses = OrderStatus.values();
+
+        if (userMB.isStaff()) {
+            return new OrderStatus[] { OrderStatus.INPROGRESS, OrderStatus.TODELIVER};
+        }
+         if (userMB.isDeliverer()) {
+            return new OrderStatus[] { OrderStatus.DELIVERED, OrderStatus.DELIVERING};
+        }
+
+        return orderStatuses;
+    }
+
+    public void changeOrderStatus(Order order) {
+        order.setOrderStatus(newStatus);
+        orderFacade.update(order);
+    }
+
+    public List<Order> getOrdersByStatus(OrderStatus orderStatus) {
+        return orderFacade.findOrderByStatus(orderStatus);
+    }
+
+    public void showMessage(String cost) {
+        FacesMessage message = new FacesMessage(cost);
+
+        RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 }

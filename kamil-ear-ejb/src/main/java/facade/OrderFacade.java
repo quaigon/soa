@@ -1,6 +1,8 @@
 package facade;
 
+import model.Dish;
 import model.Order;
+import model.OrderStatus;
 import model.User;
 
 import javax.ejb.Local;
@@ -22,4 +24,8 @@ public interface OrderFacade {
     List<Order> findAll();
 
     List<Order> findOrderByUser (User user);
+
+    List<Order> findOrderByStatus (OrderStatus orderStatus);
+
+    List<Order> findOrderByDish(Dish dish);
 }

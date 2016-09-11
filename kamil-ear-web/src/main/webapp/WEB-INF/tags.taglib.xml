@@ -4,4 +4,8 @@
         <tag-name>menu</tag-name>
         <source>../tags/menu.xhtml</source>
     </tag>
+    <tag>
+        <tag-name>orders</tag-name>
+        <source>../tags/orders.xhtml</source>
+    </tag>
 </facelet-taglib>

@@ -1,6 +1,8 @@
 package model;
 
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -10,19 +12,21 @@ import java.util.List;
  */
 @Entity
 @Table(name = "orders")
-@NamedQueries(
-        @NamedQuery(name = "orderByUser", query = "SELECT o FROM Order o WHERE o.User.name LIKE :name")
+@NamedQueries({
+        @NamedQuery(name = "orderByUser", query = "SELECT o FROM Order o WHERE o.User.name LIKE :name"),
+        @NamedQuery(name = "orderByStatus", query = "SELECT o FROM Order o WHERE  o.orderStatus = :status"),
+}
 )
-public class Order {
+public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int orderId;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private User User = new User();
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Dish> orderedDishes;
 
     private Date date;
@@ -73,4 +77,5 @@ public class Order {
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
+
 }

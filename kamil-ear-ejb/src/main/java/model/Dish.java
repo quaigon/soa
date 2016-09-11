@@ -11,17 +11,17 @@ import java.util.List;
 public class Dish {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int dishId;
 
     private String name;
 
     private double cost;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Ingridient> ingridientList;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private Category category = new Category();
 
     public int getDishId() {
@@ -62,5 +62,22 @@ public class Dish {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dish dish = (Dish) o;
+
+        return dishId == dish.dishId;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return dishId;
     }
 }

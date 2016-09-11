@@ -50,4 +50,12 @@ public class UserFacadeImpl implements UserFacade {
 
         return userDAO.findOneResult("userQuery", paramters);
     }
+
+    @Override
+    public List<User> findUserByRole(String role) {
+        Map<String, Object> paramters = new HashMap();
+        paramters.put("role", role);
+
+        return userDAO.findResults("userQuery", paramters);
+    }
 }

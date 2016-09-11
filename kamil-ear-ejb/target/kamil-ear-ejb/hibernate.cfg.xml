@@ -12,6 +12,7 @@
         <property name="connection.datasource">java:jboss/mojDS</property>
          <!--DB schema will be updated if needed -->
          <property name="hbm2ddl.auto">update</property>
+        <property name="hibernate.event.merge.entity_copy_observer">allow</property>
         <mapping class="model.Ingridient"/>
     </session-factory>
 </hibernate-configuration>
