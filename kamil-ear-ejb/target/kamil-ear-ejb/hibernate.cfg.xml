@@ -11,7 +11,7 @@
         <property name="connection.password">kamil</property>
         <property name="connection.datasource">java:jboss/mojDS</property>
          <!--DB schema will be updated if needed -->
-         <property name="hbm2ddl.auto">create</property>
-
+         <property name="hbm2ddl.auto">update</property>
+        <mapping class="model.Ingridient"/>
     </session-factory>
 </hibernate-configuration>

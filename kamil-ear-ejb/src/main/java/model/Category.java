@@ -14,16 +14,16 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private int categoryId;
 
     private String name;
 
-    public int getId() {
-        return id;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCategoryId(int id) {
+        this.categoryId = id;
     }
 
     public String getName() {
@@ -32,5 +32,29 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        if (categoryId != category.categoryId) return false;
+        return name.equals(category.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = categoryId;
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

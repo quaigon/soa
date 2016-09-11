@@ -1,0 +1,7 @@
+<facelet-taglib>
+    <namespace>http://tutorialspoint.com/facelets</namespace>
+    <tag>
+        <tag-name>menu</tag-name>
+        <source>../tags/menu.xhtml</source>
+    </tag>
+</facelet-taglib>

@@ -1,9 +1,7 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Kamil on 05.06.2016.
@@ -14,17 +12,24 @@ public class Dish {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    private int id;
+    private int dishId;
 
     private String name;
+
     private double cost;
 
-    public int getId() {
-        return id;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Ingridient> ingridientList;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Category category = new Category();
+
+    public int getDishId() {
+        return dishId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDishId(int id) {
+        this.dishId = id;
     }
 
     public String getName() {
@@ -41,5 +46,21 @@ public class Dish {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public List<Ingridient> getIngridientList() {
+        return ingridientList;
+    }
+
+    public void setIngridientList(List<Ingridient> ingridientList) {
+        this.ingridientList = ingridientList;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

@@ -6,6 +6,7 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by Kamil on 05.06.2016.
@@ -18,11 +19,12 @@ public abstract class GenericDAO<T> {
 
     private Class<T> entityClass;
 
+
     public GenericDAO(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
-    protected GenericDAO() {
+    public GenericDAO() {
     }
 
     public void save(T entity) {
@@ -49,7 +51,7 @@ public abstract class GenericDAO<T> {
         return em.createQuery(cq).getResultList();
     }
 
-    protected T findOneResult(String namedQuery, Map<String, Object> parameters) {
+    public T findOneResult(String namedQuery, Map<String, Object> parameters) {
         T result = null;
 
         try {
@@ -61,6 +63,27 @@ public abstract class GenericDAO<T> {
             }
 
             result = (T) query.getSingleResult();
+
+        } catch (Exception e) {
+            System.out.println("Error while running query: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public List<T> findResults(String namedQuery, Map<String, Object> parameters) {
+        List <T> result = null;
+
+        try {
+            Query query = em.createNamedQuery(namedQuery);
+
+            // Method that will populate parameters if they are passed not null and empty
+            if (parameters != null && !parameters.isEmpty()) {
+                populateQueryParameters(query, parameters);
+            }
+
+            result = query.getResultList();
 
         } catch (Exception e) {
             System.out.println("Error while running query: " + e.getMessage());

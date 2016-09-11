@@ -26,7 +26,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
 
     @Override
     public void delete(Category category) {
-        categoryDAO.delete(category.getId(), Category.class);
+        categoryDAO.delete(category.getCategoryId(), Category.class);
     }
 
     @Override

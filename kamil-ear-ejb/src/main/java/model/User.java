@@ -7,23 +7,21 @@ import javax.persistence.*;
  */
 
 @Entity
+@NamedQueries(
+        @NamedQuery(name = "userQuery", query = "SELECT u FROM User u WHERE u.name LIKE :name")
+)
+@Table(name = "users")
 public class User {
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    private int id;
-
     private String password;
+
+    @Id
     @Column(unique = true)
     private String name;
+
     private String role;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public User() {
     }
 
     public String getPassword() {
