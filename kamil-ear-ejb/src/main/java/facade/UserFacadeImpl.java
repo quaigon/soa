@@ -56,6 +56,6 @@ public class UserFacadeImpl implements UserFacade {
         Map<String, Object> paramters = new HashMap();
         paramters.put("role", role);
 
-        return userDAO.findResults("userQuery", paramters);
+        return userDAO.findResults("userByRole", paramters);
     }
 }

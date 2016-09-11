@@ -37,6 +37,8 @@ public class OrderMB {
     @Inject
     private UserMB userMB;
 
+    private String deliverer;
+
     public void addUser(User user) {
         order.setUser(user);
     }
@@ -72,7 +74,14 @@ public class OrderMB {
         if (userMB.isCustomer()) {
             return orderFacade.findOrderByUser(userMB.getCurrentUser());
         } else if (userMB.isDeliverer()) {
-            return orderFacade.findOrderByStatus(OrderStatus.TODELIVER);
+            List<Order> orders = orderFacade.findOrderByStatus(OrderStatus.TODELIVER);
+            List<Order> deliverOrders = new ArrayList<>();
+            for (Order order1 : orders) {
+                if(order1.getDeliverer().getName().equals(userMB.getCurrentUser().getName())) {
+                    deliverOrders.add(order1);
+                }
+            }
+            return deliverOrders;
         } else {
             return orderFacade.findAll();
         }
@@ -116,6 +125,12 @@ public class OrderMB {
         orderFacade.update(order);
     }
 
+    public void addDeliverer(Order order) {
+        User del = userMB.getUserByName(deliverer);
+        order.setDeliverer(del);
+        orderFacade.update(order);
+    }
+
     public List<Order> getOrdersByStatus(OrderStatus orderStatus) {
         return orderFacade.findOrderByStatus(orderStatus);
     }
@@ -125,4 +140,13 @@ public class OrderMB {
 
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
+
+    public String getDeliverer() {
+        return deliverer;
+    }
+
+    public void setDeliverer(String deliverer) {
+        this.deliverer = deliverer;
+    }
+
 }

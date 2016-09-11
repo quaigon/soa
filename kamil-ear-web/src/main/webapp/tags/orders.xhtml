@@ -15,6 +15,17 @@
         <h:outputText value="#{order.date}"/>
     </p:column>
 
+    <p:column headerText="Deliverer">
+        <h:outputText value="#{order.deliverer}"/>
+        <h:form>
+            <p:selectOneMenu rendered="#{userMB.staff}" value="#{orderMB.deliverer}">
+                <f:selectItems value="#{userMB.deliverers}"/>
+            </p:selectOneMenu>
+            <p:commandButton rendered="#{userMB.staff}" value="Add Deliverer" action="#{orderMB.addDeliverer(order)}"/>
+        </h:form>
+    </p:column>
+
+
     <p:column headerText="Order Status">
         <h:outputText value="#{order.orderStatus}"/>
         <h:form>

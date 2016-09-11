@@ -26,6 +26,9 @@ public class Order implements Serializable {
     @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private User User = new User();
 
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    private User deliverer;
+
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Dish> orderedDishes;
 
@@ -78,4 +81,11 @@ public class Order implements Serializable {
         this.orderStatus = orderStatus;
     }
 
+    public model.User getDeliverer() {
+        return deliverer;
+    }
+
+    public void setDeliverer(model.User deliverer) {
+        this.deliverer = deliverer;
+    }
 }

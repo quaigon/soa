@@ -33,11 +33,7 @@ public class UserMB {
         return user;
     }
 
-    public List<User> getUserByRole(String role) {
-        List<User> users = null;
-
-        return users;
-    }
+    private User deliverer;
 
     public void createuser() {
         userFacade.save(user);
@@ -81,4 +77,17 @@ public class UserMB {
 
         return username;
     }
+
+    public List<User> getDeliverers() {
+        return getUserByRole(DELIVERER);
+    }
+
+    private List<User> getUserByRole(String role) {
+        return userFacade.findUserByRole(role);
+    }
+
+    public User getUserByName(String username) {
+        return userFacade.findUserByUsername(username);
+    }
+
 }
