@@ -5,9 +5,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
       xmlns:tp="http://tutorialspoint.com/facelets">
-<head>
+<h:head>
     <title>Admin</title>
-</head>
+</h:head>
 <body>
 
 <tp:logout>
@@ -16,23 +16,22 @@
 <br/>
 
 <h:form>
-    <h:outputLabel for="name" value="User name "/>
-    <h:inputText id="name" value="#{userMB.user.name}" required="true"/>
+    <p:outputLabel for="name" value="User name"/>
+    <p:inputText id="name" value="#{userMB.user.name}" required="true"/>
     <br/>
-    <h:outputLabel for="password" value="User Password "/>
-    <h:inputText id="password" value="#{userMB.user.password}" rendered="true"/>
+    <p:outputLabel for="password" value="User Password "/>
+    <p:inputText id="password" value="#{userMB.user.password}" rendered="true"/>
     <br/>
-    <h:outputLabel for="role" value="User Role "/>
-    <h:selectOneMenu id="role" value="#{userMB.user.role}">
+    <p:outputLabel for="role" value="User Role "/>
+    <p:selectOneMenu id="role" value="#{userMB.user.role}">
         <f:selectItem itemValue="admin" itemLabel="admin" />
         <f:selectItem itemValue="deliver" itemLabel="deliver" />
         <f:selectItem itemValue="customer" itemLabel="customer" />
         <f:selectItem itemValue="manager" itemLabel="manager" />
         <f:selectItem itemValue="staff" itemLabel="staff" />
-    </h:selectOneMenu>
+    </p:selectOneMenu>
     <br/>
-    <h:outputLabel for="save" value="save"/>
-    <h:commandButton id="save" action="#{userMB.createuser}" value="Add new user " />
+    <p:commandButton id="save" action="#{userMB.createuser}" value="Add new user " />
 </h:form>
 </body>
 

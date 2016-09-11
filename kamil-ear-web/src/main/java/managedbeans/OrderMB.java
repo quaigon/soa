@@ -77,7 +77,13 @@ public class OrderMB {
             List<Order> orders = orderFacade.findOrderByStatus(OrderStatus.TODELIVER);
             orders.addAll(orderFacade.findOrderByStatus(OrderStatus.DELIVERING));
             List<Order> deliverOrders = new ArrayList<>();
+            if (orders == null) {
+                return null;
+            }
             for (Order order1 : orders) {
+                if (order1.getDeliverer() == null) {
+                    break;
+                }
                 if(order1.getDeliverer().getName().equals(userMB.getCurrentUser().getName())) {
                     deliverOrders.add(order1);
                 }
