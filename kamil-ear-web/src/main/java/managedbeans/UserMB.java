@@ -49,6 +49,10 @@ public class UserMB {
 
     }
 
+    public User getCurrentUser() {
+        return userFacade.findUserByUsername(getUserName());
+    }
+
     public boolean isManager() {
         User user = userFacade.findUserByUsername(getUserName());
 

@@ -27,6 +27,9 @@ public class Order {
 
     private Date date;
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
     public int getOrderId() {
         return orderId;
     }
@@ -61,5 +64,13 @@ public class Order {
 
     public void addDish(Dish dish) {
         orderedDishes.add(dish);
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }
